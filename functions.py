@@ -1,3 +1,4 @@
+
 def show_data() -> None:
     '''Выводит информацию из справочника'''
     with open('book.txt', 'r', encoding='utf-8') as f:
@@ -26,17 +27,6 @@ def search(book: str, info: str) -> str:
     book = book.split('\n')
     return '\n'.join([post for post in book if info in post])
 
-def delete_data() -> None:
-    objects = []
-    with open('book.txt', 'r+', encoding='utf-8') as f:
-        delete_fio = str(input('Введите ФИО для удаления: '))
-        for i in f.readlines():
-            #fio = fio(from_line = i)
-            objects.append(i)
-        print(objects)
-        for object in objects:
-            if object == delete_fio:
-                f.write(object.__str__())
 
 
 
@@ -47,17 +37,16 @@ def change_data() -> None:
     with open('book.txt', 'r', encoding='utf-8') as f:
         tel_book = f.read()
     result = search(tel_book, find)
-    b = (result)
+    b = result
     print(b)
     
-    tel_book = [tel_book]
-    b = [b]
+    tel_book = tel_book.split('\n')
     tel_book[tel_book.index(b)] = changing(b)
+
     with open('book.txt', 'w', encoding='utf-8') as f:
-        f.write('\n tel_book')
-     
-    #with open('book.txt', 'w', encoding='utf-8') as f:
-    #    f.write(f'\n{tel_book.index(obj_indx)}')
+        for item in tel_book: 
+            f.write(f'\n{item}')
+
 
 
 def changing(text: str) -> str:
@@ -73,3 +62,17 @@ def changing(text: str) -> str:
     return (f'{fio} | {tel_num}')
 
 
+def delete_data() -> None:
+    drop = input('Поиск контакта для удаления: ')
+    
+    with open('book.txt', 'r', encoding='utf-8') as f:
+        tel_book = f.read()
+    result = search(tel_book, drop)
+    print(result)
+
+    tel_book = tel_book.split('\n')
+    tel_book.remove(result)
+    
+    with open('book.txt', 'w', encoding='utf-8') as f:
+        for item in tel_book: 
+            f.write(f'\n{item}')
